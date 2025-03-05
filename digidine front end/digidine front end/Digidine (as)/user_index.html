@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <link rel="shortcut icon" href="images/favicon.png" type="">
+
+  <title> DigiDine </title>
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+
+  <!--owl slider stylesheet -->
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+  <!-- nice select  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ==" crossorigin="anonymous" />
+  <!-- font awesome style -->
+  <link href="css/font-awesome.min.css" rel="stylesheet" />
+
+  <!-- Custom styles for this template -->
+  <link href="css/style.css" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="css/responsive.css" rel="stylesheet" />
+
+</head>
+<style>
+    header {
+        background: linear-gradient(to right, rgb(13, 14, 16), rgb(58, 66, 69));
+    }
+    
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        background: linear-gradient(to right, rgb(13, 14, 16), rgb(58, 66, 69));
+        font-family: Arial, sans-serif;
+    }
+
+    .parent {
+        padding: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .form-container {
+        width: 550px;
+        background: rgba(230, 156, 0, 0.1);
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(230, 156, 0, 0.4);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    h2 {
+        color: rgb(230, 156, 0);
+        margin-bottom: 20px;
+        font-size: 40px;
+    }
+
+    input {
+        width: 90%;
+        padding: 12px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 5px;
+        background: rgba(230, 156, 0, 0.2);
+        color: white;
+        outline: none;
+        font-size: 16px;
+        margin-left: 10px;
+    }
+    
+    select {
+        width: 90%;
+        padding: 12px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 5px;
+        background: rgba(230, 156, 0, 0.2);
+        color: white;
+        outline: none;
+        font-size: 16px;
+        margin-left: 10px;
+    }
+    select option {
+      background-color: rgba(58, 66, 69, 0.8); /* Set background color for dropdown options */
+      color: white; /* Set text color for options */
+  }
+    input[type="checkbox"] {
+        width: auto;
+        margin-top: 10px;
+    }
+
+    label {
+    color: white;
+    font-size: 16px;
+    text-align: left; /* Align text to the left */
+    display: block; /* Ensure label is on a new line */
+    margin-bottom: 5px; /* Optional: Adds space below the label */
+    margin-left: 10px; /* Optional: Adds space from the left */
+}
+
+    button {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 5px;
+        background: rgb(230, 156, 0);
+        color: black;
+        font-size: 18px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background: white;
+        color: black;
+    }
+
+    .glow {
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        background: rgba(230, 156, 0, 0.3);
+        filter: blur(60px);
+        border-radius: 50%;
+        animation: moveGlow 2s infinite alternate;
+    }
+
+    @keyframes moveGlow {
+        0% {
+            top: -50px;
+            left: -50px;
+        }
+
+        100% {
+            top: 100%;
+            left: 100%;
+        }
+    }
+
+    .terms {
+        margin-top: 15px;
+        color: white;
+        font-size: 14px;
+        display: flex;
+        align-items: center; /* Vertically aligns checkbox and label */
+        margin-left: 10px; /* Adjust the space between the checkbox and the left edge */
+    }
+
+    .terms input {
+        margin-right: 10px;
+    }
+
+    .terms label {
+        font-size: 16px;
+        text-align: left;
+    }
+</style>
+
+<body>
+  <!-- header section -->
+  <header class="header_section">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg custom_nav-container ">
+        <a class="navbar-brand" href="index.html">
+          <span>DigiDine</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="user_index.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="menu.html">Menu</a>
+            </li>
+          </ul>
+          <div class="user_option">
+            <a href="login.html" class="user_link"><i class="fa fa-user" aria-hidden="true"></i></a>
+            <a class="cart_link" href="cart.html">
+              🛒
+            </a>
+            <a href="#" class="order_online">Logout</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+  <!-- end header section -->
+
+  <div class="parent">
+    <div class="form-container">
+      <div class="glow"></div>
+      <h2>Reserve your Table</h2>
+      <form id="newform" enctype="multipart/form-data">
+        <label for="fname"> Full Name:</label>
+        <input type="text" id="fname" name="fname" placeholder="Full Name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Email" required>
+
+        <label for="phone">Phone No.</label>
+        <input type="tel" id="phone" name="phone" placeholder="Phone No." required>
+
+        <label for="noOfPersons">Select No of Persons:</label>
+        <select id="noOfPersons" name="persons" required>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+        </select>
+
+        <label for="date">Select Date:</label>
+        <input type="date" id="date" name="date" required>
+
+        <label for="time">Time:</label>
+        <select id="time" name="time" required></select>
+
+        <label for="image">Upload Image:</label>
+        <input type="file" id="image" name="image" accept="image/*" required>
+
+        <div class="terms">
+          <input type="checkbox" id="terms" name="terms" required>
+          <label for="terms">
+            I confirm that the information I provided is valid and understand that if I become late, my reservation may be
+            canceled.
+          </label>
+        </div>
+
+        <button type="submit">Reserve Table</button>
+      </form>
+    </div>
+  </div>
+</body>
+
+<script>
+ 
+    document.getElementById("newform").addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const formData = new FormData();
+      formData.append("name", document.getElementById("fname").value);
+      formData.append("phone", document.getElementById("phone").value);
+      formData.append("email", document.getElementById("email").value);
+      formData.append("persons", document.getElementById("noOfPersons").value);
+      formData.append("date", document.getElementById("date").value);
+      formData.append("time", document.getElementById("time").value);
+      formData.append("image", document.getElementById("image").files[0]);
+console.log(formData)
+      try {
+        const response = await fetch("http://localhost:5000/booking", {
+          method: "POST",
+          body: formData,
+        });
+
+        const result = await response.json();
+        alert(result.message);
+        document.getElementById("newform").reset();
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Reservation failed, please try again.");
+      }
+    });
+  
+
+  function populateTimeSlots() {
+    const timeSelect = document.getElementById('time');
+    const startTime = 11; // 11:00 AM
+    const endTime = 23; // 11:00 PM
+    const interval = 60; // 60-minute intervals
+
+    for (let hour = startTime; hour < endTime; hour++) {
+      ["00", "30"].forEach(minute => {
+        const timeOption = document.createElement('option');
+        timeOption.value = `${hour}:${minute}`;
+        timeOption.textContent = `${hour}:${minute}`;
+        timeSelect.appendChild(timeOption);
+      });
+    }
+  }
+
+  window.onload = populateTimeSlots;
+</script>
+
+</html>
