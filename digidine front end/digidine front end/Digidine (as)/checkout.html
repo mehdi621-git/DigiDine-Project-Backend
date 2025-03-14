@@ -248,5 +248,14 @@
     </form>
   </div>
 </div>
+<script>
+    document.getElementById("payment-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const isLoggedIn = localStorage.getItem("token"); // Assuming a token is stored after login
+    if (!isLoggedIn) {
+      window.location.href = "./login.html"; // Redirect to login page
+      return;
+    }})
+</script>
 </body>
 </html>

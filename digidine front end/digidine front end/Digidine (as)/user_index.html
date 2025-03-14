@@ -256,7 +256,11 @@
  
     document.getElementById("newform").addEventListener("submit", async (event) => {
       event.preventDefault();
-
+      const isLoggedIn = localStorage.getItem("token"); // Assuming a token is stored after login
+    if (!isLoggedIn) {
+      window.location.href = "./login.html"; // Redirect to login page
+      return;
+    }
       const formData = new FormData();
       formData.append("name", document.getElementById("fname").value);
       formData.append("phone", document.getElementById("phone").value);
@@ -273,6 +277,7 @@ console.log(formData)
         });
 
         const result = await response.json();
+        console.log(result)
         alert(result.message);
         document.getElementById("newform").reset();
       } catch (error) {

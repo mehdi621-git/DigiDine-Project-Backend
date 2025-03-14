@@ -172,15 +172,53 @@
         </div>
       </header>
       <!-- end header section -->
-    <div class="parent">
-      <div class="form-container">
-        <div class="glow"></div>
-        <h2>Login</h2>
-        <input type="text" placeholder="Username" required>
-        <input type="password" placeholder="Password" required>
-        <button>Login</button>
-        <p style="color: white; margin-top: 10px;">Don't have an account? <a href="signup.html" style="color: rgb(230, 156, 0);">Sign up</a></p>
-    </div>
+      <div class="parent">
+        <div class="form-container">
+          <div class="glow"></div>
+          <h2>Login</h2>
+          <input type="text" id="username" placeholder="Username" required>
+          <input type="password" id="password" placeholder="Password" required>
+          <button onclick="loginUser()">Login</button>
+          <p style="color: white; margin-top: 10px;">
+            Don't have an account?
+            <a href="signup.html" style="color: rgb(230, 156, 0);">Sign up</a>
+          </p>
+        </div>
+      </div>
+      
+      <script>
+        async function loginUser() {
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+      
+          if (!username || !password) {
+            alert("Please enter both username and password.");
+            return;
+          }
+      
+          try {
+            const response = await fetch("http://localhost:5000/login", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ username, password }),
+            });
+      
+            const data = await response.json();
+      
+            if (response.ok) {
+              localStorage.setItem("token", data.token); // Store token
+              alert("Login successful!");
+              window.location.href = "user_index.html"; // Redirect after login
+            } else {
+              alert(data.message || "Login failed. Please check your credentials.");
+            }
+          } catch (error) {
+            console.error("Error:", error);
+            alert("Something went wrong. Please try again.");
+          }
+        }
+      </script>
+      
 </div>
 </body>
 </html>
