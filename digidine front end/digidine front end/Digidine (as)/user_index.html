@@ -167,6 +167,12 @@
         font-size: 16px;
         text-align: left;
     }
+    .right-set{
+      display: flex;
+      justify-content: center;
+     flex-direction: column;
+     align-items: center;
+    }
 </style>
 
 <body>
@@ -184,18 +190,22 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mx-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="user_index.html">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="menu.html">Menu</a>
             </li>
           </ul>
           <div class="user_option">
-            <a href="login.html" class="user_link"><i class="fa fa-user" aria-hidden="true"></i></a>
+           
+            <a href="login.html" class="user_link right-set logined"><i class="fa fa-user" aria-hidden="true"></i>
+            <p class="generalMe"></p>
+            </a>
+        
             <a class="cart_link" href="cart.html">
               🛒
             </a>
-            <a href="#" class="order_online">Logout</a>
+            <a href="#" class="order_online" onclick="logout()">Logout</a>
           </div>
         </div>
       </nav>
@@ -248,19 +258,32 @@
 
         <button type="submit">Reserve Table</button>
       </form>
+      <p class="loader" style="color: White;"></p>
     </div>
   </div>
 </body>
 
 <script>
- 
+    
+
+  if(!localStorage.getItem('token')){
+      document.querySelector('.order_online').style.display = "none";
+      document.querySelector('.generalMe').innerHTML = "Login";
+
+    }else{
+      document.querySelector('.logined').style.display = "none";
+
+    }
     document.getElementById("newform").addEventListener("submit", async (event) => {
       event.preventDefault();
-      const isLoggedIn = localStorage.getItem("token"); // Assuming a token is stored after login
+      document.querySelector('.loader').innerHTML = "Wait....."; 
+      const isLoggedIn = localStorage.getItem("token");
+      // Assuming a token is stored after login
     if (!isLoggedIn) {
       window.location.href = "./login.html"; // Redirect to login page
       return;
     }
+    
       const formData = new FormData();
       formData.append("name", document.getElementById("fname").value);
       formData.append("phone", document.getElementById("phone").value);
@@ -278,6 +301,8 @@ console.log(formData)
 
         const result = await response.json();
         console.log(result)
+      document.querySelector('.loader').innerHTML = " "; 
+
         alert(result.message);
         document.getElementById("newform").reset();
       } catch (error) {
@@ -286,7 +311,11 @@ console.log(formData)
       }
     });
   
-
+    function logout() {
+    localStorage.removeItem("token"); // Remove the token
+    location.reload();
+     // Redirect to login page (change as needed)
+}
   function populateTimeSlots() {
     const timeSelect = document.getElementById('time');
     const startTime = 11; // 11:00 AM

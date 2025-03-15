@@ -5,7 +5,12 @@ body {
   background-color: #ffffff;
   overflow-x: hidden;
 }
-
+.right-set{
+  display: flex;
+  justify-content: center;
+ flex-direction: column;
+ align-items: center;
+}
 .layout_padding {
   padding: 90px 0;
 }

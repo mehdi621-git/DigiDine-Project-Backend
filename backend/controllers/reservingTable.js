@@ -55,7 +55,7 @@ console.log("moving right")
       const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
       oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
       
-      async function sendEmail() {
+      async function sendEmail(to,subject,text) {
         try {
           const accessToken = await oAuth2Client.getAccessToken();
       
@@ -72,18 +72,10 @@ console.log("moving right")
           });
       
           const mailOptions = {
-            from: "digidineproject@gmail.com",
-            to: email,
-            subject: "Welcome!",
-            html: `
-            <p>You have successfully registered a table for <strong>${persons}</strong> persons on <strong>${date}</strong> at <strong>${time}</strong>.</p>
-            <br/>
-            <p>On behalf of <strong>${name}</strong>.</p>
-            <br/>
-            <p><b>Contact Information:</b></p>
-            <p>📧 Email: ${email}</p>
-            <p>📞 Phone Number: ${phone}</p>
-          `,
+            from:"digidineproject@gmail.com",
+            to,
+            subject,
+            html:text,
           };
       
           const result = await transporter.sendMail(mailOptions);
@@ -93,7 +85,22 @@ console.log("moving right")
         }
       }
       
-      sendEmail();
+      sendEmail(req.body.email,"Welcome", `
+        <p>You have successfully registered a table for <strong>${req.body.persons}</strong> persons on <strong>${req.body.date}</strong> at <strong>${req.body.time}</strong>.</p>
+        <br/>
+        <p>On behalf of <strong>${req.body.name}</strong>.</p>
+        <br/>
+        <p><b>Contact Information:</b></p>
+        <p>📧 Email: ${req.body.email}</p>
+        <p>📞 Phone Number: ${req.body.phone}</p>
+      `,);
+      sendEmail("digidineproject@gmail.com","New Table Reserved", `
+        <p><strong>${req.body.name}</strong> registered a table for <strong>${req.body.persons}</strong> persons on <strong>${req.body.date}</strong> at <strong>${req.body.time}</strong>.</p>
+        <br/>
+        <p><b>Contact Information:</b></p>
+        <p>📧 Email: ${req.body.email}</p>
+        <p>📞 Phone Number: ${req.body.phone}</p>
+      `,);
       res.status(201).json({ message: "Table reserved successfully!", booking: newBooking });
     } catch (error) {
       res.status(500).json({ error: error.message });

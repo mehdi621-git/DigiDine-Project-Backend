@@ -62,19 +62,18 @@
               <li class="nav-item">
                 <a class="nav-link" href="about.html">About</a>
               </li>
+            
               <li class="nav-item">
-                <a class="nav-link" href="book.html">Book Table</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="user_index.html">Book Table neww</a><a href="user_index.html"></a>
+                <a class="nav-link" href="user_index.html">Book Table </a><a href="user_index.html"></a>
 
               </li>
             </ul>
             <div class="user_option">
-              <a href="login.html" class="user_link">
+              <a href="login.html" class="user_link right-set logined">
                 <i class="fa fa-user" aria-hidden="true"></i>
+                <p class="generalMe"></p>
               </a>
-              <a class="cart_link" href="#">
+              <a class="cart_link" href="cart.html">
                 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                   <g>
                     <g>
@@ -103,9 +102,7 @@
                   <i class="fa fa-search" aria-hidden="true"></i>
                 </button>
               </form>
-              <a href="book.html" class="order_online">
-                Order Online
-              </a>
+              <a href="#" class="order_online" onclick="logout()">Logout</a>
             </div>
           </div>
         </nav>
@@ -801,9 +798,9 @@
                 </div>
               
                     <button type="submit">Book Now</button>
-         
+        
             </form>
-     
+    
           </div>
         </div>
         <div class="col-md-6">
@@ -966,9 +963,25 @@
   <!-- End Google Map -->
 
   <script>
+     if(!localStorage.getItem('token')){
+      document.querySelector('.order_online').style.display = "none";
+      document.querySelector('.generalMe').innerHTML = "Login";
+
+    }else{
+      document.querySelector('.logined').style.display = "none";
+
+
+    }
+    function logout() {
+    localStorage.removeItem("token"); 
+    location.reload();
+   
+     // Redirect to login page (change as needed)
+}
     document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("newform").addEventListener("submit", async (event) => {
-            event.preventDefault(); // Prevents page refresh
+            event.preventDefault();
+           // Prevents page refresh
             console.log("Form submission prevented!");
 
             const name = document.getElementById("name").value;
@@ -990,6 +1003,7 @@
                 });
 
                 const result = await response.json();
+
                 alert(result.message); // Show success message
                 document.getElementById("newform").reset(); // Reset form
             } catch (error) {

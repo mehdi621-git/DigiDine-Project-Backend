@@ -95,3 +95,9 @@ padding-left: 0;
     width: 50%;
   }
 }
+.right-set{
+  display: flex;
+  justify-content: center;
+ flex-direction: column;
+ align-items: center;
+}

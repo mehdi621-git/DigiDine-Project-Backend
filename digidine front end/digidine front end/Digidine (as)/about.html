@@ -29,6 +29,14 @@
   <link href="css/style.css" rel="stylesheet" />
   <!-- responsive style -->
   <link href="css/responsive.css" rel="stylesheet" />
+  <style>
+    .right-set{
+  display: flex;
+  justify-content: center;
+ flex-direction: column;
+ align-items: center;
+}
+  </style>
 
 </head>
 
@@ -64,14 +72,15 @@
                 <a class="nav-link" href="about.html">About <span class="sr-only">(current)</span> </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="book.html">Book Table</a>
+                <a class="nav-link" href="user_index.html">Book Table</a>
               </li>
             </ul>
             <div class="user_option">
-              <a href="login.html" class="user_link">
+              <a href="login.html" class="user_link right-set logined">
                 <i class="fa fa-user" aria-hidden="true"></i>
+                <p class="generalMe"></p>
               </a>
-              <a class="cart_link" href="#">
+              <a class="cart_link" href="cart.html">
                 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                   <g>
                     <g>
@@ -100,9 +109,7 @@
                   <i class="fa fa-search" aria-hidden="true"></i>
                 </button>
               </form>
-              <a href="book.html" class="order_online">
-                Order Online
-              </a>
+              <a href="#" class="order_online" onclick="logout()">Logout</a>
             </div>
           </div>
         </nav>
@@ -219,7 +226,22 @@
     </div>
   </footer>
   <!-- footer section -->
+<script>
+   if(!localStorage.getItem('token')){
+      document.querySelector('.order_online').style.display = "none";
+      document.querySelector('.generalMe').innerHTML = "Login";
 
+    }else{
+      document.querySelector('.logined').style.display = "none";
+
+
+    }
+    function logout() {
+    localStorage.removeItem("token"); // Remove the token
+    location.reload();
+     // Redirect to login page (change as needed)
+}
+</script>
   <!-- jQery -->
   <script src="js/jquery-3.4.1.min.js"></script>
   <!-- popper js -->
