@@ -7,9 +7,7 @@ MongoDB Compass (Ensure MongoDB is running) → Install MongoDB Compass
 
 Clone this Repository
 
-git clone [https://github.com/yourusername/digidine-backend.git
-cd digidine-backend]
-(https://github.com/mehdi621-git/DigiDine-Project-Backend/)
+git clone https://github.com/mehdi621-git/DigiDine-Project-Backend/
 
 2️⃣ Install Dependencies
 
@@ -30,7 +28,7 @@ CLIENT_SECRET=
 REFRESH_TOKEN=
 
 Replace your_mongodb_connection_string with your actual MongoDB connection string. (open MongoDb Compass and get the string and connect)
-Take other data from Developer or generate yours using Google Oauth and developers/playground
+
 
 4️⃣ Ensure uploads Folder Exists
 
@@ -42,7 +40,7 @@ mkdir uploads
 
 To run the backend server, use:
 
-node server.js
+npm run dev
 
 6️⃣ API Endpoints
 
