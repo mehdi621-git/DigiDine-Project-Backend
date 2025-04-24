@@ -24,16 +24,21 @@ const bookingSchema = new mongoose.Schema({
     required: true
   },
   time: {
-    type: String, // Store time as HH:MM format (e.g., "18:30")
+    type: String, 
     required: true
   },
   image: {
-    type: String, // Store the image filename or URL
+    type: String, 
     required: true
+  },
+  tableNumber: { 
+    type: Number,
+    required: true,
   }
 }, { timestamps: true });
 
 const Booking = mongoose.model("Booking", bookingSchema);
 
 export default Booking;
+
 

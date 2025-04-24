@@ -333,6 +333,59 @@ console.log(formData)
   }
 
   window.onload = populateTimeSlots;
+
+
+
+
+  // Code to disable past date and time while booking table
+  const dateInput = document.getElementById("date");
+  const timeSelect = document.getElementById("time");
+
+  // Set today's date as min
+  const now = new Date();
+  const todayStr = now.toISOString().split('T')[0];
+  dateInput.setAttribute("min", todayStr);
+
+  // Convert to 12-hour format with AM/PM
+  function format12Hour(hour, minute) {
+    const period = hour >= 12 ? 'PM' : 'AM';
+    const hour12 = hour % 12 === 0 ? 12 : hour % 12;
+    const minStr = minute.toString().padStart(2, '0');
+    return `${hour12}:${minStr} ${period}`;
+  }
+
+  // Generate time options
+  function populateTimes(selectedDate) {
+    timeSelect.innerHTML = ""; // Clear existing options
+    const selected = new Date(selectedDate);
+    const isToday = selected.toDateString() === new Date().toDateString();
+
+    for (let hour = 0; hour < 24; hour++) {
+      for (let min = 0; min < 60; min += 30) {
+        const timeValue = `${hour.toString().padStart(2, '0')}:${min.toString().padStart(2, '0')}`;
+        const option = document.createElement("option");
+        option.value = timeValue;
+        option.textContent = format12Hour(hour, min);
+
+        // Disable past times if today is selected
+        if (isToday) {
+          const optionTime = new Date();
+          optionTime.setHours(hour, min, 0, 0);
+          if (optionTime < now) {
+            option.disabled = true;
+          }
+        }
+
+        timeSelect.appendChild(option);
+      }
+    }
+  }
+
+  // Load times when date is selected
+  dateInput.addEventListener("change", (e) => {
+    populateTimes(e.target.value);
+  });
 </script>
+
 
 </html>

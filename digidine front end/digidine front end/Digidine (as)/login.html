@@ -99,6 +99,26 @@
             0% { top: -50px; left: -50px; }
             100% { top: 100%; left: 100%; }
         }
+        .password-wrapper {
+  position: relative;
+  width: 90%;
+  margin: 10px auto;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 40px; /* space for the eye icon */
+}
+
+.password-wrapper i {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #ccc;
+  cursor: pointer;
+}
+
 </style>
 <body>
       <!-- header section strats -->
@@ -127,7 +147,7 @@
                   <a class="nav-link" href="about.html">About</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="book.html">Book Table</a>
+                  <a class="nav-link" href="user_index.html">Book Table</a>
                 </li>
               </ul>
               <div class="user_option">
@@ -176,7 +196,11 @@
           <div class="glow"></div>
           <h2>Login</h2>
           <input type="text" id="username" placeholder="Username" required>
-          <input type="password" id="password" placeholder="Password" required>
+          <div class="password-wrapper">
+            <input type="password" id="password" placeholder="Password" required>
+            <i class="fa fa-eye-slash" id="togglePassword" aria-hidden="true"></i>
+          </div>
+          
           <button onclick="loginUser()">Login</button>
           <p style="color: white; margin-top: 10px;">
             Don't have an account?
@@ -185,38 +209,73 @@
         </div>
       </div>
       
-      <script>
-        async function loginUser() {
-          const username = document.getElementById("username").value;
-          const password = document.getElementById("password").value;
-      
-          if (!username || !password) {
-            alert("Please enter both username and password.");
-            return;
-          }
-      
-          try {
-            const response = await fetch("http://localhost:5000/login", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ username, password }),
-            });
-      
-            const data = await response.json();
-      
-            if (response.ok) {
-              localStorage.setItem("token", data.token); // Store token
-              alert("Login successful!");
-              window.location.href = "user_index.html"; // Redirect after login
-            } else {
-              alert(data.message || "Login failed. Please check your credentials.");
-            }
-          } catch (error) {
-            console.error("Error:", error);
-            alert("Something went wrong. Please try again.");
-          }
-        }
-      </script>
+
+      <!-- Login Success Modal -->
+<div class="modal fade" id="loginSuccessModal" tabindex="-1" role="dialog" aria-labelledby="loginSuccessModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content" style="background-color: #1f1f1f; color: white;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginSuccessModalLabel">Welcome!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Login successful! Redirecting you to your dashboard...
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  async function loginUser() {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    if (!username || !password) {
+      alert("Please enter both username and password.");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:5000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        localStorage.setItem("token", data.token); // Store token
+
+        // Show success modal
+       alert("Login Successful");
+
+        // Redirect after 2 seconds
+        setTimeout(() => {
+          window.location.href = "user_index.html";
+        }, 500);
+      } else {
+        alert(data.message || "Login failed. Please check your credentials.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Something went wrong. Please try again.");
+    }
+  }
+
+  // Show/hide password
+  const togglePassword = document.getElementById("togglePassword");
+  const passwordInput = document.getElementById("password");
+
+  togglePassword.addEventListener("click", () => {
+    const type = passwordInput.type === "password" ? "text" : "password";
+    passwordInput.type = type;
+    togglePassword.classList.toggle("fa-eye");
+    togglePassword.classList.toggle("fa-eye-slash");
+  });
+</script>
+
       
 </div>
 </body>

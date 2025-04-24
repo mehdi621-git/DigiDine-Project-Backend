@@ -40,16 +40,55 @@ const reserveTable = async (req, res) => {
 
     try {
       console.log(req.body); // Debugging
-console.log("moving right")
+
       const { name, phone, email, persons, date, time } = req.body;
       const image = req.file ? req.file.filename : null;
-
+  
       // Validate request
       if (!name || !phone || !email || !persons || !date || !time || !image) {
         return res.status(400).json({ message: "All fields, including image, are required" });
       }
+  
+      // Function to generate a random table number between 1 and 10
+      
+  
+      let tableNumber=1;
+      let isTableReserved = true;
+  
+      // Try to find an available table (1 to 10) that is not already reserved for the given time
+      while (isTableReserved && tableNumber <=10) {
+        
+  
+        // Check if the table is already reserved at the given time
+        const existingBooking = await Booking.findOne({
+          tableNumber,
+          date,
+          time
+        });
 
-      const newBooking = new Booking({ name, phone, email, persons, date, time, image });
+        if (!existingBooking) {
+          // If no booking is found for this table, we can proceed with the reservation
+          isTableReserved = false;
+          break;
+        }
+        tableNumber++;
+      }
+      if(isTableReserved){
+        return res.status(400).json({ message: "No tables available at the selected time." });s
+      }
+  
+      // Create a new booking with the selected table number
+      const newBooking = new Booking({
+        name,
+        phone,
+        email,
+        persons,
+        date,
+        time,
+        image,
+        tableNumber // Add the reserved table number
+      });
+  
       await newBooking.save();
 
       const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
@@ -86,7 +125,7 @@ console.log("moving right")
       }
       
       sendEmail(req.body.email,"Welcome", `
-        <p>You have successfully registered a table for <strong>${req.body.persons}</strong> persons on <strong>${req.body.date}</strong> at <strong>${req.body.time}</strong>.</p>
+        <p>You have successfully registered a table No. ${tableNumber} for <strong>${req.body.persons}</strong> persons on <strong>${req.body.date}</strong> at <strong>${req.body.time}</strong>.</p>
         <br/>
         <p>On behalf of <strong>${req.body.name}</strong>.</p>
         <br/>
@@ -95,7 +134,7 @@ console.log("moving right")
         <p>📞 Phone Number: ${req.body.phone}</p>
       `,);
       sendEmail("digidineproject@gmail.com","New Table Reserved", `
-        <p><strong>${req.body.name}</strong> registered a table for <strong>${req.body.persons}</strong> persons on <strong>${req.body.date}</strong> at <strong>${req.body.time}</strong>.</p>
+        <p><strong>${req.body.name}</strong> registered a table No. ${tableNumber} for <strong>${req.body.persons}</strong> persons on <strong>${req.body.date}</strong> at <strong>${req.body.time}</strong>.</p>
         <br/>
         <p><b>Contact Information:</b></p>
         <p>📧 Email: ${req.body.email}</p>

@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.post('/register', registerUser);
 router.post('/booking', reserveTable);
-router.post("/login", loginUser);
+router.post('/login', loginUser);
 
 
 export default router;

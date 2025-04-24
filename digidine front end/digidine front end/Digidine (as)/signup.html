@@ -113,6 +113,34 @@
       0% { top: -50px; left: -50px; }
       100% { top: 100%; left: 100%; }
     }
+
+    .password-wrapper {
+  position: relative;
+  width: 90%;
+  margin: 10px auto;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding: 10px 40px 10px 10px; /* space on the right for the icon */
+  border: none;
+  border-radius: 5px;
+  background: rgba(230, 156, 0, 0.2);
+  color: white;
+  outline: none;
+}
+
+.password-wrapper i {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  color: white; /* 👈 this makes the icon white */
+  cursor: pointer;
+  font-size: 18px;
+  z-index: 1;
+}
+
   </style>
 </head>
 <body>
@@ -140,7 +168,7 @@
               <a class="nav-link" href="about.html">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="book.html">Book Table</a>
+              <a class="nav-link" href="user_index.html">Book Table</a>
             </li>
           </ul>
           <div class="user_option">
@@ -172,7 +200,11 @@
       <form id="signup-form">
         <input type="text" id="username" placeholder="Username" required>
         <input type="email" id="email" placeholder="Email" required>
-        <input type="password" id="password" placeholder="Password" required>
+        <div class="password-wrapper">
+          <input type="password" id="password" placeholder="Password" required>
+          <i class="fa fa-eye-slash" id="togglePassword" aria-hidden="true"></i>
+        </div>
+        
         <button type="submit">Sign Up</button>
       </form>
       <p style="color: white; margin-top: 10px;">Already have an account? 
@@ -180,33 +212,75 @@
       </p>
     </div>
   </div>
+  <!-- Success Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content" style="background-color: #1f1f1f; color: white;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="successModalLabel">Success!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        You have successfully signed up!
+      </div>
+      <div class="modal-footer">
+        <a href="login.html" class="btn btn-warning">Go to Login</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 
   <script>
-    document.getElementById("signup-form").addEventListener("submit", async (event) => {
-      event.preventDefault(); // Prevent form submission
+  const togglePassword = document.getElementById("togglePassword");
+  const passwordInput = document.getElementById("password");
 
-      const username = document.getElementById("username").value;
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
+  togglePassword.addEventListener("click", () => {
+    const isPassword = passwordInput.type === "password";
+    passwordInput.type = isPassword ? "text" : "password";
 
-      console.log("Submitting...");
+    // Toggle eye / eye-slash
+    togglePassword.classList.toggle("fa-eye-slash");
+    togglePassword.classList.toggle("fa-eye");
+  });
 
-      try {
-        const response = await fetch("http://localhost:5000/register", {
-          method: "POST",
-          mode : 'cors' , 
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ username, email, password }),
-        });
+  document.getElementById("signup-form").addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-        const result = await response.json();
-        console.log(result);
-      } catch (error) {
-        console.error("Error:", error);
+    const username = document.getElementById("username").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    console.log("Submitting...");
+
+    try {
+      const response = await fetch("http://localhost:5000/register", {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, email, password }),
+      });
+
+      const result = await response.json();
+      console.log("Status:", response.status);
+      console.log("Result:", result);
+
+      if (response.ok) {
+        $('#successModal').modal('show');
+      } else {
+        alert(result.message || "Something went wrong.");
       }
-    });
-  </script>
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Server error. Please try again later.");
+    }
+  });
+
+
+</script>
 </body>
 </html>
