@@ -21,7 +21,7 @@ Create a .env file in the backend directory and add the following:
 
 PORT=5000
 MONGO_URI= your_mongodb_connection_string
-JWT_SECRET=
+JWT_SECRET= In Production chnage your Token
 # Google OAuth2 Credentials
 CLIENT_ID=
 CLIENT_SECRET=
